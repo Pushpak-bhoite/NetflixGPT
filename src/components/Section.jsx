@@ -10,6 +10,8 @@ export default function Section() {
 
     const [movies, setMovies] = useState(mData)
     const [search, setSearch] = useState({ iSearch: "" })
+    const [isSignIn, setIsSignIn] = useState(true)
+    const [userInfo, setUserInfo ] = useState({})
 
     // console.log(data)
     let movie = movies.filter((e) => e.title.toLowerCase().includes(search.iSearch)).map((e) => {
@@ -32,11 +34,11 @@ export default function Section() {
                                 <div>
                                     <img className='logo mt-4' src={logo} alt="" />
                                 </div>
-                                <div className='nav-text mt-4' >
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        Login
-                                    </button>
-                                    <AuthFormModal />
+                                <div className='nav-text mt-4 ' >
+                                <span className='text-white' type='button' data-bs-toggle="modal" data-bs-target="#exampleModal"> 
+                                        Sign In
+                                    </span>
+                                    <AuthFormModal isSignIn={isSignIn} setIsSignIn={setIsSignIn} />
                                 </div>
                             </div>
 
