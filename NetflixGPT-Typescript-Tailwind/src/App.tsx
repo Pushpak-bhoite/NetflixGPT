@@ -1,13 +1,19 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import Section from './components/Section'
+import Auth from './components/Auth'
+import Home from './components/Home'
 
 function App() {
 
   return (
     <>
-     <div>
-        <Section />
-     </div>
+      
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Auth />}></Route>
+          <Route path="/home" element={<Home />}></Route>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

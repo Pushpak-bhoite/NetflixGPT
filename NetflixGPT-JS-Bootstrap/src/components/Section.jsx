@@ -1,9 +1,9 @@
 import React from 'react'
 import mData from './data.js'
 import { useState } from 'react'
-// import Carts from './Carts.jsx'
+import Carts from './Carts.jsx'
 import logo from '../assets/image/logo.png'
-// import AuthFormModal from './AuthFormModal.jsx'
+import AuthFormModal from './AuthFormModal.jsx'
 
 
 export default function Section() {
@@ -14,9 +14,9 @@ export default function Section() {
     const [userInfo, setUserInfo ] = useState({})
 
     // console.log(data)
-    // let movie = movies.filter((e) => e.title.toLowerCase().includes(search.iSearch)).map((e) => {
-    //     return <Carts key={e.id} movie={e} />
-    // })
+    let movie = movies.filter((e) => e.title.toLowerCase().includes(search.iSearch)).map((e) => {
+        return <Carts key={e.id} movie={e} />
+    })
 
     function searchFunc(event) {
         let form = event.target
@@ -25,9 +25,9 @@ export default function Section() {
     return (
         <>
             <div>
-                <div className='container '>
+                <div className='hero-container '>
 
-                    <div className=' '>
+                    <div className='heroImg '>
                         <div className='heroImg-child'>
                             <div className='position-relative '>
                                 <div>
@@ -37,7 +37,7 @@ export default function Section() {
                                 <span className='text-white' type='button' data-bs-toggle="modal" data-bs-target="#exampleModal"> 
                                         Sign In
                                     </span>
-                                    {/* <AuthFormModal isSignIn={isSignIn} setIsSignIn={setIsSignIn} /> */}
+                                    <AuthFormModal isSignIn={isSignIn} setIsSignIn={setIsSignIn} />
                                 </div>
                             </div>
 
@@ -57,7 +57,7 @@ export default function Section() {
                 </div>
 
                 <div className='d-flex flex-wrap p-4 justify-content-center gap-4' >
-                    {/* {movie} */}
+                    {movie}
                 </div>
             </div>
         </>
@@ -75,3 +75,14 @@ export default function Section() {
 
 
 
+
+
+// id:e.id,
+//         title:e.title,
+//         year:e.year,
+//         rating:e.rating,
+//         poster: e.poster,
+//         trailer: e.trailer,
+//         genre: e.genre,
+//         cast: e.cast,
+//         director:e.director
