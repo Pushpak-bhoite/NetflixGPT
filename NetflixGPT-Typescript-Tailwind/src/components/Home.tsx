@@ -3,8 +3,6 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 // import Carts from './Carts.jsx'
 import logo from '../assets/image/logo.png'
-import heroAuthImg from '../assets/image/header-image.png'
-import AuthFormModal from './AuthFormModal.ts'
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { auth } from '../utils/firebase.js'
 import { useNavigate } from 'react-router-dom'
@@ -12,53 +10,35 @@ import toast from 'react-hot-toast'
 import { API_OPTIONS } from '../utils/constants.ts'
 import Movies from './Movies.tsx'
 
-
-
 interface AuthProps {
     userData: any, // Ideally, replace 'any' with the appropriate type
     setUserData: React.Dispatch<React.SetStateAction<any>> // Or replace 'any' with the correct type for userData
 }
 
 const Home: React.FC<AuthProps> = ({ userData, setUserData }) => {
-
     // const [movies, setMovies] = useState(mData)
-    const [movies, setMovies] = useState({})
+    const [movies, setMovies] = useState([])
     const [isSignIn, setIsSignIn] = useState(false)
     const [heroVideo, setHeroVideo] = useState<string>('')
     const navigate = useNavigate();
-    // console.log(data)
-    // let movie = movies.filter((e) => e.title.toLowerCase().includes(search.iSearch)).map((e) => {
-    //     return <Carts key={e.id} movie={e} />
-    // })
-
-    function searchFunc(event) {
-        let form = event.target
-        setSearch(prev => ({ ...prev, [form.name]: form.value }));
-    }
-
+    
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
     });
 
-    const [errors, setErrors] = useState({});
-
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    console.log('isSignIn', isSignIn)
-
-
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                console.log('user', user)
                 setUserData(user)
             } else {
-                console.log('Hii')
+                console.log('No user Found')
             }
         });
     }, [])
@@ -82,9 +62,7 @@ const Home: React.FC<AuthProps> = ({ userData, setUserData }) => {
 
     function onLogOut() {
         signOut(auth).then((res) => {
-            // Sign-out successful.
             toast.success('you are logged out')
-            console.log('Sign-out successful.', res)
             localStorage.removeItem('NetflixLoginToken')
             navigate('/');
         }).catch((error) => {
@@ -98,7 +76,6 @@ const Home: React.FC<AuthProps> = ({ userData, setUserData }) => {
         }
     });
 
-    console.log('kk', userData)
     return (
         <>
             <div className='flex justify-center bg-black'>
