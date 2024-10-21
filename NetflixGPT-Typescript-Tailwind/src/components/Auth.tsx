@@ -5,27 +5,25 @@ import { useState } from 'react'
 import logo from '../assets/image/logo.png'
 import heroAuthImg from '../assets/image/header-image.png'
 import AuthFormModal from './AuthFormModal.ts'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { auth } from '../utils/firebase.js'
 import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
+
+interface AuthProps {
+    userData: any, // Ideally, replace 'any' with the appropriate type
+    setUserData: React.Dispatch<React.SetStateAction<any>> // Or replace 'any' with the correct type for userData
+}
+
+const Auth: React.FC<AuthProps> = ({ userData, setUserData }) => {
 
 
-export default function Auth() {
 
     // const [movies, setMovies] = useState(mData)
     const [search, setSearch] = useState({ iSearch: "" })
     const [isSignIn, setIsSignIn] = useState(false)
     const [userInfo, setUserInfo] = useState({})
     const navigate = useNavigate();
-    // console.log(data)
-    // let movie = movies.filter((e) => e.title.toLowerCase().includes(search.iSearch)).map((e) => {
-    //     return <Carts key={e.id} movie={e} />
-    // })
-
-    function searchFunc(event) {
-        let form = event.target
-        setSearch(prev => ({ ...prev, [form.name]: form.value }));
-    }
 
     const [formData, setFormData] = useState({
         name: '',
@@ -60,6 +58,14 @@ export default function Auth() {
                     }))
                     setIsSignIn(prev => !prev)
 
+                    updateProfile((user), {
+                        displayName: formData.name, photoURL: "https://i.pinimg.com/474x/1a/09/3a/1a093a141eeecc720c24543f2c63eb8d.jpg"
+                    }).then((res) => {
+                        console.log('res', res)
+                        setUserData(res);
+                    }).catch((error) => {
+                        console.log('err', error)
+                    });
                 })
                 .catch((error) => {
                     const errorCode = error.code;
@@ -72,8 +78,8 @@ export default function Auth() {
         } else {
             signInWithEmailAndPassword(auth, formData.email, formData.password)
                 .then((userCredential) => {
-                    const userData:any = userCredential.user;
-                    console.log('Login -> user',userData?.accessToken)
+                    const userData: any = userCredential.user;
+                    console.log('Login -> user', userData?.accessToken)
                     localStorage.setItem('NetflixLoginToken', userData?.accessToken)
                     navigate('/home')
                 })
@@ -86,13 +92,14 @@ export default function Auth() {
         }
     };
 
-    useEffect(()=>{
-        let token:string | null = localStorage.getItem('NetflixLoginToken') || null
-        if(token){
+    useEffect(() => {
+        let token: string | null = localStorage.getItem('NetflixLoginToken') || null
+        if (token) {
             navigate('/home')
         }
-        console.log(typeof token)
     })
+
+
     return (
         <>
             <div className='flex justify-center bg-black'>
@@ -211,7 +218,7 @@ export default function Auth() {
     )
 }
 
-
+export default Auth;
 
 
 
