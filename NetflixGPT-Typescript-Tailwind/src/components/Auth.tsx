@@ -298,14 +298,14 @@ const Auth: React.FC<AuthProps> = ({ setUserData }) => {
 
     return (
         <>
-            <div className='flex justify-center bg-black'>
-                <div className='container bg-red-100'>
-                    <div className='min-h-screen position-relative m-0 p-0'>
+            <div className='flex justify-center min-h-screen bg-black'>
+                <div className='container bg-black'>
+                    <div className='position-relative  '>
                         <img className='absolute inset-0 z-10 h-full w-full object-cover' src={heroAuthImg} alt="Hero" />
                         {/* <div className='absolute inset-0 z-10 bg-gradient-to-t from-transparent from-60 to-black'></div> */}
                         <div className='absolute inset-0 z-10 bg-gradient-to-t from-black via-transparent to-black'></div>
                         <div className='z-30 absolute inset-0 bg-transparent'>
-                            <img className='h-10 absolute top-10 left-24' src={logo} alt="Logo" />
+                            <img className='h-10 absolute top-8 left-1/2 transform -translate-x-1/2 sm:top-8 sm:left-16 md:top-6 md:left-20 lg:top-20 lg:left-24 xl:top-12 xl:left-28' src={logo} alt="Logo" />
                             <div className="flex flex-col justify-center items-center h-full">
                                 <div className="w-full max-w-xs">
                                     <form

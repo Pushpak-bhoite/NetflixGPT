@@ -20,6 +20,7 @@ const Home: React.FC<AuthProps> = ({ userData, setUserData }) => {
     const [heroVideo, setHeroVideo] = useState<string>('')
     const navigate = useNavigate();
 
+
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -68,7 +69,7 @@ const Home: React.FC<AuthProps> = ({ userData, setUserData }) => {
     return (
         <>
             <div className='flex justify-center bg-black'>
-                <div className='container bg-red-100 '>
+                <div className='container bg-black '>
 
                     <div className='min-h-screen position-relative m-0 p-0 '>
                         {/* <img  src={heroAuthImg} /> */}
