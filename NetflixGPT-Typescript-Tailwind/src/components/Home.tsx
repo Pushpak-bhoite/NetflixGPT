@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import logo from '../assets/image/logo.png'
-import {  onAuthStateChanged, signOut } from 'firebase/auth'
+import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { auth } from '../utils/firebase.js'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
@@ -70,31 +70,36 @@ const Home: React.FC<AuthProps> = ({ userData, setUserData }) => {
         <>
             <div className='flex justify-center bg-black'>
                 <div className='container bg-black '>
-
                     <div className='min-h-screen position-relative m-0 p-0 '>
                         {/* <img  src={heroAuthImg} /> */}
+                        <div className='absolute z-10 inset-0 h-full w-full overflow-hidden'>
                         <iframe
-                            className="absolute inset-0 z-10 h-full w-full aspect-video"
+                            className="   h-full w-full aspect-video scale-150"
                             src={"https://www.youtube.com/embed/" + heroVideo + "?autoplay=1&mute=1"}
                             title="YouTube video player"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerPolicy="strict-origin-when-cross-origin"
                             allowFullScreen
                         ></iframe>
+                        </div>
 
-                        <div className=' absolute inset-0 z-10 bg-black opacity-60'></div>
-
+                        <div className=' absolute inset-0 z-10 bg-black opacity-80'></div>
+                        
                         <div className='z-40 absolute inset-0 bg-transparent'>
-                            <img className=' h-12 absolute top-10 left-24' src={logo} alt="Logo" />
+                            <img className=' h-6 md:h-12 absolute top-20 md:top-10 left-6 md:left-24' src={logo} alt="Logo" />
 
-                            <div className='text-white text-lg absolute right-10 top-5 flex items-center gap-4 '>
+                            <div className='text-white text-lg absolute right-4 md:right-20 top-10 md:top-10 flex items-center gap-4 '>
                                 <span>{userData?.displayName}</span>
-                                <img className='h-10 rounded-full ' src={userData?.photoURL} alt="user epic" />
-                                <button onClick={onLogOut} type='button' className=" ">
-                                    (Logout)
+                                {/* <img className='h-10 rounded-full ' s   rc={userData?.photoURL} alt="user epic" /> */}
+                                <button
+                                    onClick={onLogOut}
+                                    type='button'
+                                    className='bg-red-600 px-3 py-1 rounded text-xs md:text-sm hover:bg-red-700 transition'>
+                                    Logout
                                 </button>
                             </div>
                         </div>
+                      
 
                         <div className='flex justify-center items-center text-center z-30 absolute text-white inset-0'>
                             <div className='max-w-lg '>
@@ -110,9 +115,12 @@ const Home: React.FC<AuthProps> = ({ userData, setUserData }) => {
                 </div>
             </div>
 
-            <div className='bg-black'>
+            <div className='bg-black relative'>
+                <div className=''>
+                    
                 <Movies movies={movies} category={'Trending Now'} />
                 <Movies movies={[...movies].reverse()} category={'Recents'} />
+                </div>
             </div>
             <div>
                 <Footer />

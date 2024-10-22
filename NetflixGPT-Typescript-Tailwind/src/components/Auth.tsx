@@ -267,6 +267,12 @@ const Auth: React.FC<AuthProps> = ({ setUserData }) => {
                     }).then(() => {
                         setUserData(user);
                     });
+                    setFormData({
+                        name: '',
+                        email: '',
+                        password: '',
+                    })
+                    setIsSignIn((prev) => !prev)
                     toast.success('Sign Up successful ')
                 })
                 .catch((error) => {
@@ -280,7 +286,11 @@ const Auth: React.FC<AuthProps> = ({ setUserData }) => {
                     localStorage.setItem('NetflixLoginToken', userData?.accessToken);
                     navigate('/home');
                     toast.success('Login successful ')
-
+                    setFormData({
+                        name: '',
+                        email: '',
+                        password: '',
+                    })
                 })
                 .catch((error) => {
                     console.log('Error:', error.message);
