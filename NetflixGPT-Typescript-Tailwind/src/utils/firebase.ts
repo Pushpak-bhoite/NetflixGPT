@@ -20,5 +20,6 @@ const firebaseConfig: any = {
 // Initialize Firebase
 const app:any = initializeApp(firebaseConfig);
 const analytics:any = getAnalytics(app);
+console.log(analytics)
 
 export const auth:any = getAuth()

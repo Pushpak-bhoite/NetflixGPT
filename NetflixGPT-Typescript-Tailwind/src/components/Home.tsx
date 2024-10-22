@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
-// import mData from './data.js'
 import { useState } from 'react'
-// import Carts from './Carts.jsx'
 import logo from '../assets/image/logo.png'
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import {  onAuthStateChanged, signOut } from 'firebase/auth'
 import { auth } from '../utils/firebase.js'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { API_OPTIONS } from '../utils/constants.ts'
 import Movies from './Movies.tsx'
+import Footer from './Footer.tsx'
 
 interface AuthProps {
     userData: any, // Ideally, replace 'any' with the appropriate type
@@ -18,20 +17,8 @@ interface AuthProps {
 const Home: React.FC<AuthProps> = ({ userData, setUserData }) => {
     // const [movies, setMovies] = useState(mData)
     const [movies, setMovies] = useState([])
-    const [isSignIn, setIsSignIn] = useState(false)
     const [heroVideo, setHeroVideo] = useState<string>('')
     const navigate = useNavigate();
-    
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        password: '',
-    });
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -61,7 +48,8 @@ const Home: React.FC<AuthProps> = ({ userData, setUserData }) => {
     }, [])
 
     function onLogOut() {
-        signOut(auth).then((res) => {
+        console.log('---------------------------*********8')
+        signOut(auth).then(() => {
             toast.success('you are logged out')
             localStorage.removeItem('NetflixLoginToken')
             navigate('/');
@@ -69,6 +57,7 @@ const Home: React.FC<AuthProps> = ({ userData, setUserData }) => {
             toast.error(error)
         });
     }
+
     useEffect(() => {
         const token: string | null = localStorage.getItem('NetflixLoginToken');
         if (!token) {
@@ -94,13 +83,13 @@ const Home: React.FC<AuthProps> = ({ userData, setUserData }) => {
 
                         <div className=' absolute inset-0 z-10 bg-black opacity-60'></div>
 
-                        <div className='z-30 absolute inset-0 bg-transparent'>
-                            <img className=' h-16 absolute top-10 left-24' src={logo} alt="Logo" />
+                        <div className='z-40 absolute inset-0 bg-transparent'>
+                            <img className=' h-12 absolute top-10 left-24' src={logo} alt="Logo" />
 
-                            <div className='text-white text-xl absolute right-10 top-5 flex items-center gap-2 '>
+                            <div className='text-white text-lg absolute right-10 top-5 flex items-center gap-4 '>
                                 <span>{userData?.displayName}</span>
-                                <img className='h-10 rounded-lg ' src={userData?.photoURL} alt="user epic" />
-                                <button onClick={onLogOut} className=''>
+                                <img className='h-10 rounded-full ' src={userData?.photoURL} alt="user epic" />
+                                <button onClick={onLogOut} type='button' className=" ">
                                     (Logout)
                                 </button>
                             </div>
@@ -118,19 +107,14 @@ const Home: React.FC<AuthProps> = ({ userData, setUserData }) => {
                     </div>
 
                 </div>
-
-                {/* <div className='search-container form-control'>
-                    <input onChange={searchFunc} name='iSearch' value={search.iSearch} type="text" className='rounded-pill m-5' placeholder='search ' />
-                </div>
-
-                <div className='d-flex flex-wrap p-4 justify-content-center gap-4' >
-                    {movie}
-                </div> */}
-
             </div>
 
+            <div className='bg-black'>
+                <Movies movies={movies} category={'Trending Now'} />
+                <Movies movies={[...movies].reverse()} category={'Recents'} />
+            </div>
             <div>
-                <Movies movies={movies} />
+                <Footer />
             </div>
         </>
     )
